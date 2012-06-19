@@ -1,4 +1,4 @@
-Extremely thin python wrapper for Microsoft Azure Bing Search API.
+Extremely thin python wrapper for Microsoft Azure Bing Search API. Please note that this module does not use the Bing Search API 2.0 AppIDs which will be deprecated on August 1, 2012. This module requires that you sign up to the Windows Azure Marketplace and apply for an application key.
 
 Usage
 =====
