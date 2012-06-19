@@ -24,7 +24,7 @@ setup(
     version='0.1',
     author=u'Guitarparty.com',
     author_email='oss@guitarparty.com',
-    packages=['bingsearch'],
+    py_modules=['bingsearch'],
     url='http://github.com/guitarparty/bingsearch',
     license='MIT',
     description=DESCRIPTION,
