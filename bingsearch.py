@@ -10,8 +10,7 @@ class BingSearch(object):
     def __init__(self, api_key):
         self.api_key = api_key
 
-    def request(self, query, limit=50, format='json'):
-        print query
+    def search(self, query, limit=50, format='json'):
         url = self.QUERY_URL.format(urllib2.quote("'web'"),
                                     urllib2.quote("'{}'".format(query)),
                                     limit, format)
