@@ -5,13 +5,12 @@ Usage
 
 Just remember to set the `API_KEY` as your own.
 
-    >>> import bingsearch
-    >>> bingsearch.API_KEY='Your-Api-Key-Here'
-    >>> r = bingsearch.request("Python Software Foundation")
-    >>> r.status_code
-    200
-    >>> r[0]['Description']
+    >>> from bingsearch import BingSearch
+    >>> searcher = BingSearch('Your-Api-Key-Here')
+    >>> r = searcher.request("Python Software Foundation", limit=50, format='json')
+    >>> r.total
+    50
+    >>> r.results[0].description
     u'Python Software Foundation Home Page. The mission of the Python Software Foundation is to promote, protect, and advance the Python programming language, and to ...'
-    >>> r[0]['Url']
+    >>> r.results[0].url
     u'http://www.python.org/psf/
-
