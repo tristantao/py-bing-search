@@ -6,8 +6,8 @@ Usage
 Just remember to set the `API_KEY` as your own.
 
     >>> from bingsearch import BingSearch
-    >>> searcher = BingSearch('Your-Api-Key-Here')
-    >>> r = searcher.search("Python Software Foundation", limit=50, format='json')
+    >>> bing = BingSearch('Your-Api-Key-Here')
+    >>> r = bing.search("Python Software Foundation", limit=50, format='json')
     >>> r.total
     50
     >>> r.results[0].description
