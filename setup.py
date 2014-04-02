@@ -21,7 +21,7 @@ CLASSIFIERS = [
 
 setup(
     name='bingsearch',
-    version='0.3',
+    version='0.4',
     author=u'Guitarparty.com',
     author_email='oss@guitarparty.com',
     py_modules=['bingsearch'],
