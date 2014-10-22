@@ -29,7 +29,7 @@ class BingSearch(object):
         '''
         Returns a list of result objects, with the url for the next page bing search url.
         '''
-        url = self.QUERY_URL.format(urllib2.quote("'{}'".format(query)),
+        url = self.QUERY_URL.format(urllib2.quote("'{}'".format(query)), limit, offset, format)
         r = requests.get(url, auth=("", self.api_key))
         json_results = r.json()
         return [Result(single_result_json) for single_result_json in json_results['d']['results']], json_results['d']['__next']
