@@ -1,11 +1,15 @@
 import urllib2
 import requests
+import pdb
 
 
 class BingSearch(object):
 
-    QUERY_URL = 'https://api.datamarket.azure.com/Bing/Search/v1/Composite' \
+    #QUERY_URL = 'https://api.datamarket.azure.com/Bing/Search/v1/Composite' \
+    #             + '?Sources={}&Query={}&$top={}&$skip={}&$format={}'
+    QUERY_URL = 'https://api.datamarket.azure.com/Bing/SearchWeb/v1/Composite' \
                  + '?Sources={}&Query={}&$top={}&$skip={}&$format={}'
+
 
     def __init__(self, api_key):
         self.api_key = api_key
@@ -25,7 +29,13 @@ class BingSearch(object):
         url = self.QUERY_URL.format(urllib2.quote("'web'"),
                                     urllib2.quote("'{}'".format(query)),
                                     limit, offset, format)
-        r = requests.get(url, auth=('', self.api_key))
+        print "poop"
+        print self.api_key
+        #url = "https://api.datamarket.azure.com/Bing/SearchWeb/v1/Web?Query=%27apple%27"
+        url = "https://api.datamarket.azure.com/Bing/SearchWeb/v1/Web?Query=%27apple%20iphone%27&$format=json"
+        print url
+        r = requests.get(url, auth=("", self.api_key))
+        print r
         return Result(r.json()['d']['results'])
 
 class Result(object):
@@ -46,6 +56,7 @@ class Result(object):
         result = results[0]
         self.meta = self._Meta(result['__metadata'])
         self.total = result['WebTotal']
+        pdb.set_trace()
         self.results = []
         for result in result['Web']:
             self.results.append(self._Result(result))
