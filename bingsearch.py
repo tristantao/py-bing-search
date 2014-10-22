@@ -7,8 +7,8 @@ class BingSearch(object):
 
     #QUERY_URL = 'https://api.datamarket.azure.com/Bing/Search/v1/Composite' \
     #             + '?Sources={}&Query={}&$top={}&$skip={}&$format={}'
-    QUERY_URL = 'https://api.datamarket.azure.com/Bing/SearchWeb/v1/Composite' \
-                 + '?Sources={}&Query={}&$top={}&$skip={}&$format={}'
+    QUERY_URL = 'https://api.datamarket.azure.com/Bing/SearchWeb/v1/Web' \
+                 + '?Query={}&$top={}&$skip={}&$format={}'
 
 
     def __init__(self, api_key):
@@ -26,44 +26,42 @@ class BingSearch(object):
         return results
 
     def _search(self, query, limit, offset, format):
-        url = self.QUERY_URL.format(urllib2.quote("'web'"),
-                                    urllib2.quote("'{}'".format(query)),
-                                    limit, offset, format)
-        print "poop"
-        print self.api_key
-        #url = "https://api.datamarket.azure.com/Bing/SearchWeb/v1/Web?Query=%27apple%27"
-        url = "https://api.datamarket.azure.com/Bing/SearchWeb/v1/Web?Query=%27apple%20iphone%27&$format=json"
-        print url
+        '''
+        Returns a list of result objects, with the url for the next page bing search url.
+        '''
+        url = self.QUERY_URL.format(urllib2.quote("'{}'".format(query)),
         r = requests.get(url, auth=("", self.api_key))
-        print r
-        return Result(r.json()['d']['results'])
+        json_results = r.json()
+        return [Result(single_result_json) for single_result_json in json_results['d']['results']], json_results['d']['__next']
 
 class Result(object):
+    '''
+    The class represents a SINGLE search result.
+    Each result will come with the following:
+
+    #For the actual results#
+    title: title of the result
+    url: the url of the result
+    description: description for the result
+    id: bing id for the page
+
+    #Meta info#:
+    meta.uri: the search uri for bing
+    meta.type: for the most part WebResult
+    '''
 
     class _Meta(object):
+        '''
+        Holds the meta info for the result.
+        '''
         def __init__(self, meta):
             self.type = meta['type']
             self.uri = meta['uri']
 
-    class _Result(object):
-        def __init__(self, result):
-            self.url = result['Url']
-            self.title = result['Title']
-            self.description = result['Description']
-            self.meta = Result._Meta(result['__metadata'])
+    def __init__(self, result):
+        self.url = result['Url']
+        self.title = result['Title']
+        self.description = result['Description']
+        self.id = result['ID']
 
-    def __init__(self, results):
-        result = results[0]
         self.meta = self._Meta(result['__metadata'])
-        self.total = result['WebTotal']
-        pdb.set_trace()
-        self.results = []
-        for result in result['Web']:
-            self.results.append(self._Result(result))
-
-    def __len__(self):
-        return len(self.results)
-
-    def __iadd__(self, results):
-        self.results.extend(results.results)
-        return self
