@@ -15,10 +15,12 @@ Just remember to set the `API_KEY` as your own.
 
     >>> result_list[0].description
     u'Python Software Foundation Home Page. The mission of the Python Software Foundation is to promote, protect, and advance the Python programming language, and to ...'
-    >>> result_list[0].url
+    >>> for result in result_list:
+    ...     print result.url
     u'http://www.python.org/psf/
+    ...
     
-What you get is a list of results, each comes with the following values:
+What you get is a list of Result() instances, each comes with the following values:
     
 ```py
 self.title: title of the result
