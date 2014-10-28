@@ -13,23 +13,27 @@ Just remember to set the `API_KEY` as your own.
     >>> bing = BingSearch('Your-Api-Key-Here')
     >>> result_list, next_uri = bing.search("Python Software Foundation", limit=50, format='json')
 
+Result list is a list of search results.
+
     >>> result_list[0].description
     u'Python Software Foundation Home Page. The mission of the Python Software Foundation is to promote, protect, and advance the Python programming language, and to ...'
+    
     >>> for result in result_list:
     ...     print result.url
+    ...
     u'http://www.python.org/psf/
     ...
     
 What you get is a list of Result() instances, each comes with the following values:
     
 ```py
-self.title: title of the result
-self.url: the url of the result
-self.description: description for the result
-self.id: bing id for the page
+self.title:         title of the result
+self.url:           the url of the result
+self.description:   description for the result
+self.id:            bing id for the page
 
 #Meta info:
-self.meta.uri: the search uri for bing
-self.meta.type: for the most part WebResult
+self.meta.uri:      the search uri for bing
+self.meta.type:     for the most part WebResult
 ```
     
