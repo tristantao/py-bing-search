@@ -3,7 +3,7 @@ import requests
 import pdb
 
 
-class BingSearch(object):
+class PyBingSearch(object):
 
     #QUERY_URL = 'https://api.datamarket.azure.com/Bing/Search/v1/Composite' \
     #             + '?Sources={}&Query={}&$top={}&$skip={}&$format={}'
