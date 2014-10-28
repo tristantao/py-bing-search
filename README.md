@@ -9,8 +9,8 @@ Usage
 
 Just remember to set the `API_KEY` as your own.
 
-    >>> from bingsearch import BingSearch
-    >>> bing = BingSearch('Your-Api-Key-Here')
+    >>> from pybingsearch import PyBingSearch
+    >>> bing = PyBingSearch('Your-Api-Key-Here')
     >>> result_list, next_uri = bing.search("Python Software Foundation", limit=50, format='json')
 
 Result list is a list of search results.
