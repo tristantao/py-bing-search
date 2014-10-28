@@ -2,6 +2,8 @@ import urllib2
 import requests
 import pdb
 
+class PyBingException(Exception):
+    pass
 
 class PyBingSearch(object):
 
@@ -9,7 +11,6 @@ class PyBingSearch(object):
     #             + '?Sources={}&Query={}&$top={}&$skip={}&$format={}'
     QUERY_URL = 'https://api.datamarket.azure.com/Bing/SearchWeb/v1/Web' \
                  + '?Query={}&$top={}&$skip={}&$format={}'
-
 
     def __init__(self, api_key):
         self.api_key = api_key
@@ -31,11 +32,14 @@ class PyBingSearch(object):
         '''
         url = self.QUERY_URL.format(urllib2.quote("'{}'".format(query)), limit, offset, format)
         r = requests.get(url, auth=("", self.api_key))
-        json_results = r.json()
+        try:
+            json_results = r.json()
+        except ValueError as vE:
+            raise PyBingException("Request returned with code %s, error msg: %s" % (r.status_code, r.text))
         try:
             next_link = json_results['d']['__next']
         except KeyError as kE:
-            print "KeyError: %s" % kE
+            print "Couldn't extract next_link: KeyError: %s" % kE
             next_link = ''
         return [Result(single_result_json) for single_result_json in json_results['d']['results']], next_link
 
