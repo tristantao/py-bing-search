@@ -11,7 +11,7 @@ except:
     pass
 
 CLASSIFIERS = [
-    'Development Status :: 4 - Beta',
+    'Development Status :: 1 - Beta',
     'Intended Audience :: Developers',
     'License :: OSI Approved :: MIT License',
     'Operating System :: OS Independent',
@@ -20,12 +20,12 @@ CLASSIFIERS = [
 ]
 
 setup(
-    name='bingsearch',
-    version='0.4',
-    author=u'Guitarparty.com',
-    author_email='oss@guitarparty.com',
-    py_modules=['bingsearch'],
-    url='http://github.com/guitarparty/bingsearch',
+    name='pybingsearch',
+    version='0.1',
+    author=u'tristan tao',
+    author_email='tristan@teamleada.com',
+    py_modules=['pybingsearch'],
+    url='http://github.com/tristantao/py-bing-search',
     license='MIT',
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
