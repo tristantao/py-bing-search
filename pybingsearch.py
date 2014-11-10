@@ -12,8 +12,9 @@ class PyBingSearch(object):
     QUERY_URL = 'https://api.datamarket.azure.com/Bing/SearchWeb/v1/Web' \
                  + '?Query={}&$top={}&$skip={}&$format={}'
 
-    def __init__(self, api_key):
+    def __init__(self, api_key, safe=False):
         self.api_key = api_key
+        self.safe = safe
 
     def search(self, query, limit=50, offset=0, format='json'):
         return self._search(query, limit, offset, format)
@@ -35,7 +36,9 @@ class PyBingSearch(object):
         try:
             json_results = r.json()
         except ValueError as vE:
-            raise PyBingException("Request returned with code %s, error msg: %s" % (r.status_code, r.text))
+            print "[ERROR] Request returned with code %s, error msg: %s" % (r.status_code, r.text)
+            if not self.safe:
+                raise PyBingException("Request returned with code %s, error msg: %s" % (r.status_code, r.text))
         try:
             next_link = json_results['d']['__next']
         except KeyError as kE:
