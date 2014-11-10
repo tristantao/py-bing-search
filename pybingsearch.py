@@ -1,6 +1,7 @@
 import urllib2
 import requests
 import pdb
+import time
 
 class PyBingException(Exception):
     pass
@@ -36,9 +37,11 @@ class PyBingSearch(object):
         try:
             json_results = r.json()
         except ValueError as vE:
-            print "[ERROR] Request returned with code %s, error msg: %s" % (r.status_code, r.text)
             if not self.safe:
                 raise PyBingException("Request returned with code %s, error msg: %s" % (r.status_code, r.text))
+            else:
+                print "[ERROR] Request returned with code %s, error msg: %s. \nContinuing in 5 seconds." % (r.status_code, r.text)
+                time.slee(5)
         try:
             next_link = json_results['d']['__next']
         except KeyError as kE:
