@@ -3,7 +3,7 @@ import os
 import platform
 
 DESCRIPTION = "A simple lightweight python wrapper for the Azure Bing Search API."
-VERSION = '0.1.2'
+VERSION = '0.1.3'
 LONG_DESCRIPTION = None
 try:
     LONG_DESCRIPTION = open('README.md').read()
@@ -31,7 +31,7 @@ setup(
     author_email='tristan@teamleada.com',
     py_modules=['py-bing-search'],
     url='https://github.com/tristantao/py-bing-search',
-    download_url = 'https://github.com/tristantao/py-bing-search/tarball/0.1.2',
+    #download_url = 'https://github.com/tristantao/py-bing-search/tarball/0.1.3',
     license='MIT',
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
