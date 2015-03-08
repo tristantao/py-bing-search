@@ -2,8 +2,8 @@ from setuptools import setup, find_packages
 import os
 import platform
 
-DESCRIPTION = "A simple python wrapper for the Azure Bing Search API."
-
+DESCRIPTION = "A simple lightweight python wrapper for the Azure Bing Search API."
+VERSION = '0.1.0'
 LONG_DESCRIPTION = None
 try:
     LONG_DESCRIPTION = open('README.md').read()
@@ -11,7 +11,7 @@ except:
     pass
 
 CLASSIFIERS = [
-    'Development Status :: 0.1.0 - Beta',
+    'Development Status :: 4 - Beta',
     'Intended Audience :: Developers',
     'License :: OSI Approved :: MIT License',
     'Operating System :: OS Independent',
@@ -19,17 +19,21 @@ CLASSIFIERS = [
     'Topic :: Software Development :: Libraries :: Python Modules',
 ]
 
+INSTALL_REQUIRES = [
+    'requests',
+]
+
 setup(
-    name='pybingsearch',
-    version='0.1.0',
+    name='py-bing-search',
+    version=VERSION,
     author=u'tristan tao',
     author_email='tristan@teamleada.com',
     py_modules=['py-bing-search'],
-    url='http://github.com/tristantao/py-bing-search',
+    url='https://github.com/tristantao/py-bing-search',
+    download_url = 'https://github.com/tristantao/py-bing-search/tarball/0.1.0',
     license='MIT',
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
-    platforms=['any'],
     classifiers=CLASSIFIERS,
-    install_requires=['requests'],
+    install_requires=INSTALL_REQUIRES,
 )
