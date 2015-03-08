@@ -25,7 +25,7 @@ INSTALL_REQUIRES = [
 
 setup(
     name='py-bing-search',
-    packges = ['py-bing-search'],
+    packages = ['py-bing-search'],
     version=VERSION,
     author=u'Tristan Tao',
     author_email='tristan@teamleada.com',
