@@ -26,12 +26,11 @@ INSTALL_REQUIRES = [
 setup(
     name='py-bing-search',
     packages = ['py_bing_search'],
+    #py_modules=['py_bing_search'],
     version=VERSION,
     author=u'Tristan Tao',
     author_email='tristan@teamleada.com',
-    py_modules=['py-bing-search'],
     url='https://github.com/tristantao/py-bing-search',
-    #download_url = 'https://github.com/tristantao/py-bing-search/tarball/0.1.3',
     license='MIT',
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
