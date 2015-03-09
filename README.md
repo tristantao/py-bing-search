@@ -17,7 +17,7 @@ Usage
 
 Just remember to set the `API_KEY` as your own.
 
-    >>> from pybingsearch import PyBingSearch
+    >>> from py_bing_search import PyBingSearch
     >>> bing = PyBingSearch('Your-Api-Key-Here')
     >>> result_list, next_uri = bing.search("Python Software Foundation", limit=50, format='json')
 
