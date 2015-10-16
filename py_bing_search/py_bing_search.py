@@ -21,10 +21,12 @@ class PyBingSearch(object):
         return self._search(query, limit, offset, format)
 
     def search_all(self, query, limit=50, format='json'):
-        results = self._search(query, limit, 0, format)
-        while results.total > len(results) and len(results) < limit:
+        results, _ = self._search(query, limit, 0, format)
+        while len(results) < limit:
             max = limit - len(results)
-            more_results = self._search(query, max, len(results), format)
+            more_results, _ = self._search(query, max, len(results), format)
+            if not more_results:
+                break
             results += more_results
         return results
 
