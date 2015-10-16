@@ -21,10 +21,10 @@ class PyBingSearch(object):
         return self._search(query, limit, offset, format)
 
     def search_all(self, query, limit=50, format='json'):
-        results, _ = self._search(query, limit, 0, format)
-        while len(results) < limit:
+        results, next_link = self._search(query, limit, 0, format)
+        while next_link and len(results) < limit:
             max = limit - len(results)
-            more_results, _ = self._search(query, max, len(results), format)
+            more_results, next_link = self._search(query, max, len(results), format)
             if not more_results:
                 break
             results += more_results
@@ -43,12 +43,8 @@ class PyBingSearch(object):
                 raise PyBingException("Request returned with code %s, error msg: %s" % (r.status_code, r.text))
             else:
                 print "[ERROR] Request returned with code %s, error msg: %s. \nContinuing in 5 seconds." % (r.status_code, r.text)
-                time.slee(5)
-        try:
-            next_link = json_results['d']['__next']
-        except KeyError as kE:
-            print "Couldn't extract next_link: KeyError: %s" % kE
-            next_link = ''
+                time.sleep(5)
+        next_link = json_results['d'].get('__next')
         return [Result(single_result_json) for single_result_json in json_results['d']['results']], next_link
 
 class Result(object):
