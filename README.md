@@ -21,7 +21,8 @@ Remember to set the `API_KEY` as your own.
     >>> bing = PyBingSearch('Your-Api-Key-Here')
     >>> result_list, next_uri = bing.search("Python Software Foundation", limit=50, format='json')
 
-You can also run search_all to keep search going until it fills your required quota
+You can also run *search_all* to keep search going until it fills your required quota
+
     >>> result_list = bing.search_all("Python Software Foundation", limit=130, format='json')
     >>> len(result_list) == 130
     True
