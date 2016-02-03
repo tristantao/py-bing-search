@@ -45,7 +45,10 @@ class PyBingSearch(object):
         try:
             next_link = json_results['d']['__next']
         except KeyError as kE:
-            print "Couldn't extract next_link: KeyError: %s" % kE
+            if not self.safe:
+                raise PyBingException("Couldn't extract next_link: KeyError: %s" % kE)
+            else:
+                print "Couldn't extract next_link: KeyError: %s" % kE
             next_link = ''
         return [Result(single_result_json) for single_result_json in json_results['d']['results']], next_link
 
