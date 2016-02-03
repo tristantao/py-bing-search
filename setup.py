@@ -19,6 +19,9 @@ CLASSIFIERS = [
     'Topic :: Software Development :: Libraries :: Python Modules',
 ]
 
+KEYWORDS = ['Azure', 'API', 'Search']
+
+
 INSTALL_REQUIRES = [
     'requests',
 ]
@@ -32,6 +35,7 @@ setup(
     author_email='tristan@teamleada.com',
     url='https://github.com/tristantao/py-bing-search',
     license='MIT',
+    keywords=KEYWORDS,
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     classifiers=CLASSIFIERS,
