@@ -15,13 +15,19 @@ Installation
 Usage
 =====
 
-Just remember to set the `API_KEY` as your own.
+Remember to set the `API_KEY` as your own.
 
     >>> from py_bing_search import PyBingSearch
     >>> bing = PyBingSearch('Your-Api-Key-Here')
     >>> result_list, next_uri = bing.search("Python Software Foundation", limit=50, format='json')
 
-Result list is a list of search results.
+You can also run search_all to keep search going until it fills your required quota
+    >>> result_list = bing.search_all("Python Software Foundation", limit=130, format='json')
+    >>> len(result_list) == 130
+    True
+    >>>
+
+result_list is a list of search results. next_uri is the search link to the next page
 
     >>> result_list[0].description
     u'Python Software Foundation Home Page. The mission of the Python Software Foundation is to promote, protect, and advance the Python programming language, and to ...'
@@ -31,7 +37,7 @@ Result list is a list of search results.
     ...
     u'http://www.python.org/psf/
     ...
-    
+
 What you get is a list of Result() instances, each comes with the following values:
     
 ```py
