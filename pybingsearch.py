@@ -10,8 +10,10 @@ class PyBingSearch(object):
 
     #QUERY_URL = 'https://api.datamarket.azure.com/Bing/Search/v1/Composite' \
     #             + '?Sources={}&Query={}&$top={}&$skip={}&$format={}'
-    QUERY_URL = 'https://api.datamarket.azure.com/Bing/SearchWeb/v1/Web' \
-                 + '?Query={}&$top={}&$skip={}&$format={}'
+    #QUERY_URL = 'https://api.datamarket.azure.com/Bing/SearchWeb/v1/Web' \
+    #             + '?Query={}&$top={}&$skip={}&$format={}'
+    QUERY_URL = 'https://api.datamarket.azure.com/Bing/Search/Web?$format=json' \
+                  + '&Query={}&$top={}&$skip={}&$format={}'
 
     def __init__(self, api_key, safe=False):
         self.api_key = api_key
