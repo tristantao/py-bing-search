@@ -16,13 +16,17 @@ class PyBingSearch(object):
         self.safe = safe
 
     def search(self, query, limit=50, offset=0, format='json'):
+        ''' Returns the result list, and also the uri for next page (returned_list, next_uri) '''
         return self._search(query, limit, offset, format)
 
     def search_all(self, query, limit=50, format='json'):
-        results = self._search(query, limit, 0, format)
-        while results.total > len(results) and len(results) < limit:
+        ''' Returns a single list containing up to 'limit' Result objects'''
+        results, next_link = self._search(query, limit, 0, format)
+        while next_link and len(results) < limit:
             max = limit - len(results)
-            more_results = self._search(query, max, len(results), format)
+            more_results, next_link = self._search(query, max, len(results), format)
+            if not more_results:
+                break
             results += more_results
         return results
 
@@ -39,7 +43,7 @@ class PyBingSearch(object):
                 raise PyBingException("Request returned with code %s, error msg: %s" % (r.status_code, r.text))
             else:
                 print "[ERROR] Request returned with code %s, error msg: %s. \nContinuing in 5 seconds." % (r.status_code, r.text)
-                time.slee(5)
+                time.sleep(5)
         try:
             next_link = json_results['d']['__next']
         except KeyError as kE:
@@ -47,6 +51,7 @@ class PyBingSearch(object):
                 raise PyBingException("Couldn't extract next_link: KeyError: %s" % kE)
             else:
                 print "Couldn't extract next_link: KeyError: %s" % kE
+                time.sleep(3)
             next_link = ''
         return [Result(single_result_json) for single_result_json in json_results['d']['results']], next_link
 
