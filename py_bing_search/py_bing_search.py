@@ -8,12 +8,8 @@ class PyBingException(Exception):
 
 class PyBingSearch(object):
 
-    #QUERY_URL = 'https://api.datamarket.azure.com/Bing/Search/v1/Composite' \
-    #             + '?Sources={}&Query={}&$top={}&$skip={}&$format={}'
-    #QUERY_URL = 'https://api.datamarket.azure.com/Bing/SearchWeb/v1/Web' \
-    #             + '?Query={}&$top={}&$skip={}&$format={}'
-    QUERY_URL = 'https://api.datamarket.azure.com/Bing/Search/Web?$format=json' \
-                  + '&Query={}&$top={}&$skip={}&$format={}'
+    QUERY_URL = 'https://api.datamarket.azure.com/Bing/Search/Web' \
+                 + '?Query={}&$top={}&$skip={}&$format={}'
 
     def __init__(self, api_key, safe=False):
         self.api_key = api_key
@@ -47,7 +43,10 @@ class PyBingSearch(object):
         try:
             next_link = json_results['d']['__next']
         except KeyError as kE:
-            print "Couldn't extract next_link: KeyError: %s" % kE
+            if not self.safe:
+                raise PyBingException("Couldn't extract next_link: KeyError: %s" % kE)
+            else:
+                print "Couldn't extract next_link: KeyError: %s" % kE
             next_link = ''
         return [Result(single_result_json) for single_result_json in json_results['d']['results']], next_link
 

@@ -4,12 +4,20 @@ The modules uses OAuth, so you'll need to get your key here (free for up to 5K/M
 * [All Purpose](https://datamarket.azure.com/dataset/5BA839F1-12CE-4CCE-BF57-A49D98D29A44)
 * [Web Search Only](https://datamarket.azure.com/dataset/8818F55E-2FE5-4CE3-A617-0B8BA8419F65)
 
+
+Installation
+=====
+
+```pip install py-bing-search```
+
+*Requires the requests library.
+
 Usage
 =====
 
 Just remember to set the `API_KEY` as your own.
 
-    >>> from pybingsearch import PyBingSearch
+    >>> from py_bing_search import PyBingSearch
     >>> bing = PyBingSearch('Your-Api-Key-Here')
     >>> result_list, next_uri = bing.search("Python Software Foundation", limit=50, format='json')
 
