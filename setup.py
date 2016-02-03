@@ -21,7 +21,6 @@ CLASSIFIERS = [
 
 KEYWORDS = ['Azure', 'API', 'Search']
 
-
 INSTALL_REQUIRES = [
     'requests',
 ]
