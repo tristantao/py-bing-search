@@ -3,7 +3,7 @@ import os
 import platform
 
 DESCRIPTION = "A simple lightweight python wrapper for the Azure Bing Search API."
-VERSION = '0.1.6'
+VERSION = '0.1.7'
 LONG_DESCRIPTION = None
 try:
     LONG_DESCRIPTION = open('README.md').read()
@@ -19,7 +19,7 @@ CLASSIFIERS = [
     'Topic :: Software Development :: Libraries :: Python Modules',
 ]
 
-KEYWORDS = ['Azure', 'API', 'Search']
+KEYWORDS = ['Azure', 'Bing', 'API', 'Search']
 
 INSTALL_REQUIRES = [
     'requests',
