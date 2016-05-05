@@ -311,7 +311,6 @@ class NewsResult(object):
             self.uri = meta['uri']
 
     def __init__(self, result):
-        print result
         self.id = result['ID']
         self.title = result['Title']
         self.url = result['Url']
