@@ -1,3 +1,6 @@
+Intro
+=====
+
 Extremely thin python wrapper for Microsoft Azure Bing Search API. Please note that this module does not use the Bing Search API 2.0 AppIDs which will be deprecated on August 1, 2012. This module requires that you sign up to the Windows Azure Marketplace and apply for an application key.
 
 The modules uses OAuth, so you'll need to get your key here (free for up to 5K/Mon):
@@ -20,11 +23,12 @@ Remember to set the `API_KEY` as your own.
 ####For Web Results:
 
     >>> from py_bing_search import PyBingWebSearch
-    >>> bing_web = PyBingWebSearch('Your-Api-Key-Here', "Python Software Foundation")
+    >>> search_term = "Python Software Foundation"
+    >>> bing_web = PyBingWebSearch('Your-Api-Key-Here', search_term)
     >>> first_fifty_result= bing_web.search(limit=50, format='json') #1-50
     >>> second_fifty_result= bing_web.search(limit=50, format='json') #51-100
 
-    >>> print (result_list[0].description)
+    >>> print (second_fifty_result[0].description)
     u'Python Software Foundation Home Page. The mission of the Python Software Foundation is to promote, protect, and advance the Python programming language, and to ...'
 
 What you get is a list of WebResult() instances, each comes with the following values:
@@ -117,8 +121,8 @@ meta.type: for the most part NewsResult
 
 ## Searching for a specific number of results.
 
-You can also run *search_all* to keep search going until it fills your required quota
-    
+You secan also run __*search_all*__ to keep searching until it fills your required quota. Note that this will make an unpredictable number of api calls (hence drains your credits).
+
     >>> from py_bing_search import PyBingWebSearch
     >>> bing_web = PyBingNewsbSearch('Your-Api-Key-Here', "Python Software Foundation")
     >>> result_list = bing_web.search_all(limit=130, format='json') #will return result 1 to 130
@@ -126,4 +130,5 @@ You can also run *search_all* to keep search going until it fills your required 
     True
     >>> result_list = bing_web.search_all(limit=130, format='json') #will return result 131 to 260
 
+__*search_all*__ is available in all PyBing*search classes.
 
