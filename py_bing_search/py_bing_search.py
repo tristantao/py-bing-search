@@ -8,54 +8,69 @@ class PyBingException(Exception):
 
 class PyBingSearch(object):
 
-    QUERY_URL = 'https://api.datamarket.azure.com/Bing/Search/Web' \
-                 + '?Query={}&$top={}&$skip={}&$format={}'
-
-    def __init__(self, api_key, safe=False):
+    def __init__(self, api_key, query, query_base, safe=False):
         self.api_key = api_key
         self.safe = safe
+        self.current_offset = 0
+        self.query = query
+        self.QUERY_URL = query_base
 
-    def search(self, query, limit=50, offset=0, format='json'):
+    def search(self, limit=50, format='json'):
         ''' Returns the result list, and also the uri for next page (returned_list, next_uri) '''
-        return self._search(query, limit, offset, format)
+        return self._search(limit, format)
 
-    def search_all(self, query, limit=50, format='json'):
+    def search_all(self, limit=50, format='json'):
         ''' Returns a single list containing up to 'limit' Result objects'''
-        results, next_link = self._search(query, limit, 0, format)
-        while next_link and len(results) < limit:
-            max = limit - len(results)
-            more_results, next_link = self._search(query, max, len(results), format)
+        desired_limit = limit
+        results = self._search(limit, format)
+        limit = limit - len(results)
+        while len(results) < desired_limit:
+            more_results = self._search(limit, format)
             if not more_results:
                 break
             results += more_results
+            limit = limit - len(more_results)
+            time.sleep(1)
         return results
 
-    def _search(self, query, limit, offset, format):
+##
+## Web Search
+##
+
+class PyBingWebException(Exception):
+    pass
+
+class PyBingWebSearch(PyBingSearch):
+
+    IMAGE_QUERY_BASE = 'https://api.datamarket.azure.com/Bing/Search/Web' \
+                 + '?Query={}&$top={}&$skip={}&$format={}'
+
+    def __init__(self, api_key, query, safe=False):
+        PyBingSearch.__init__(self, api_key, query, self.IMAGE_QUERY_BASE, safe=safe)
+        #self.api_key = api_key
+        #self.safe = safe
+        #self.current_offset = 0
+        #self.query = query
+
+    def _search(self, limit, format):
         '''
         Returns a list of result objects, with the url for the next page bing search url.
         '''
-        url = self.QUERY_URL.format(urllib2.quote("'{}'".format(query)), limit, offset, format)
+        url = self.QUERY_URL.format(urllib2.quote("'{}'".format(self.query)), min(50, limit), self.current_offset, format)
         r = requests.get(url, auth=("", self.api_key))
         try:
             json_results = r.json()
         except ValueError as vE:
             if not self.safe:
-                raise PyBingException("Request returned with code %s, error msg: %s" % (r.status_code, r.text))
+                raise PyBingWebException("Request returned with code %s, error msg: %s" % (r.status_code, r.text))
             else:
                 print "[ERROR] Request returned with code %s, error msg: %s. \nContinuing in 5 seconds." % (r.status_code, r.text)
                 time.sleep(5)
-        try:
-            next_link = json_results['d']['__next']
-        except KeyError as kE:
-            if not self.safe:
-                raise PyBingException("Couldn't extract next_link: KeyError: %s" % kE)
-            else:
-                print "Couldn't extract next_link: KeyError: %s" % kE
-                time.sleep(3)
-            next_link = ''
-        return [Result(single_result_json) for single_result_json in json_results['d']['results']], next_link
+        packaged_results = [WebResult(single_result_json) for single_result_json in json_results['d']['results']]
+        self.current_offset += min(50, limit, len(packaged_results))
+        return packaged_results
 
-class Result(object):
+class WebResult(object):
     '''
     The class represents a SINGLE search result.
     Each result will come with the following:
@@ -85,4 +100,156 @@ class Result(object):
         self.description = result['Description']
         self.id = result['ID']
 
+        self.meta = self._Meta(result['__metadata'])
+
+##
+## Image Search
+##
+
+class PyBingImageException(Exception):
+    pass
+
+class PyBingImageSearch(PyBingSearch):
+
+    IMAGE_QUERY_BASE = 'https://api.datamarket.azure.com/Bing/Search/Image' \
+                 + '?Query={}&$top={}&$skip={}&$format={}'
+
+    def __init__(self, api_key, query, safe=False):
+        PyBingSearch.__init__(self, api_key, query, self.IMAGE_QUERY_BASE, safe=safe)
+        #self.api_key = api_key
+        #self.safe = safe
+        #self.current_offset = 0
+        #self.query = query
+
+    def _search(self, limit, format):
+        '''
+        Returns a list of result objects, with the url for the next page bing search url.
+        '''
+        url = self.QUERY_URL.format(urllib2.quote("'{}'".format(self.query)), min(50, limit), self.current_offset, format)
+        r = requests.get(url, auth=("", self.api_key))
+        try:
+            json_results = r.json()
+        except ValueError as vE:
+            if not self.safe:
+                raise PyBingImageException("Request returned with code %s, error msg: %s" % (r.status_code, r.text))
+            else:
+                print "[ERROR] Request returned with code %s, error msg: %s. \nContinuing in 5 seconds." % (r.status_code, r.text)
+                time.sleep(5)
+        packaged_results = [ImageResult(single_result_json) for single_result_json in json_results['d']['results']]
+        self.current_offset += min(50, limit, len(packaged_results))
+        return packaged_results
+
+class ImageResult(object):
+    '''
+    The class represents a single image search result.
+    Each result will come with the following:
+
+    #For the actual image results#
+    self.id: id of the result
+    self.title: title of the resulting image
+    self.media_url: url to the full size image
+    self.source_url: url of the website that contains the source image
+    self.width: width of the image
+    self.height: height of the image
+    self.file_size: size of the image (in bytes) if available
+    self.content_type the MIME type of the image if available
+    self.meta: meta info
+
+    #Meta info#:
+    meta.uri: the search uri for bing
+    meta.type: for the most part WebResult
+    '''
+
+    class _Meta(object):
+        '''
+        Holds the meta info for the result.
+        '''
+        def __init__(self, meta):
+            self.type = meta['type']
+            self.uri = meta['uri']
+
+    def __init__(self, result):
+
+        self.id = result['ID']
+        self.title = result['Title']
+        self.media_url = result['MediaUrl']
+        self.source_url = result['SourceUrl']
+        self.display_url = result['DisplayUrl']
+        self.width = result['Width']
+        self.height = result['Height']
+        self.file_size = result['FileSize']
+        self.content_type = result['ContentType']
+        self.meta = self._Meta(result['__metadata'])
+
+
+##
+## Video Search
+##
+class PyBingVideoException(Exception):
+    pass
+
+class PyBingVideoSearch(PyBingSearch):
+
+    VIDEO_QUERY_BASE = 'https://api.datamarket.azure.com/Bing/Search/Video' \
+                 + '?Query={}&$top={}&$skip={}&$format={}'
+
+    def __init__(self, api_key, query, safe=False):
+        PyBingSearch.__init__(self, api_key, query, self.VIDEO_QUERY_BASE, safe=safe)
+        #self.api_key = api_key
+        #self.safe = safe
+        #self.current_offset = 0
+        #self.query = query
+
+    def _search(self, limit, format):
+        '''
+        Returns a list of result objects, with the url for the next page bing search url.
+        '''
+        url = self.QUERY_URL.format(urllib2.quote("'{}'".format(self.query)), min(50, limit), self.current_offset, format)
+        r = requests.get(url, auth=("", self.api_key))
+        try:
+            json_results = r.json()
+        except ValueError as vE:
+            if not self.safe:
+                raise PyBingVideoException("Request returned with code %s, error msg: %s" % (r.status_code, r.text))
+            else:
+                print "[ERROR] Request returned with code %s, error msg: %s. \nContinuing in 5 seconds." % (r.status_code, r.text)
+                time.sleep(5)
+        packaged_results = [VideoResult(single_result_json) for single_result_json in json_results['d']['results']]
+        self.current_offset += min(50, limit, len(packaged_results))
+        return packaged_results
+
+class VideoResult(object):
+    '''
+    The class represents a single Video search result.
+    Each result will come with the following:
+
+    #For the actual Video results#
+    self.id: id of the result
+    self.title: title of the resulting Video
+    self.media_url: url to the full size Video
+    self.display_url: url to display on the search result.
+    self.run_time: run time of the video
+
+    self.meta: meta info
+
+    #Meta info#:
+    meta.uri: the search uri for bing
+    meta.type: for the most part WebResult
+    '''
+
+    class _Meta(object):
+        '''
+        Holds the meta info for the result.
+        '''
+        def __init__(self, meta):
+            self.type = meta['type']
+            self.uri = meta['uri']
+
+    def __init__(self, result):
+
+        self.id = result['ID']
+        self.title = result['Title']
+        self.media_url = result['MediaUrl']
+        self.display_url = result['DisplayUrl']
+        self.run_time = result['RunTime']
         self.meta = self._Meta(result['__metadata'])
