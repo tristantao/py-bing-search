@@ -22,7 +22,7 @@ Remember to set the `API_KEY` as your own.
     >>> from py_bing_search import PyBingWebSearch
     >>> bing_web = PyBingWebSearch('Your-Api-Key-Here', "Python Software Foundation")
     >>> first_fifty_result= bing_web.search(limit=50, format='json') #1-50
-    >>> second_fifty_result= bing_web.search(limit=50, format='json') #50-100
+    >>> second_fifty_result= bing_web.search(limit=50, format='json') #51-100
 
     >>> print (result_list[0].description)
     u'Python Software Foundation Home Page. The mission of the Python Software Foundation is to promote, protect, and advance the Python programming language, and to ...'
@@ -45,7 +45,9 @@ self.meta.type:     for the most part WebResult
     >>> from py_bing_search import PyBingImageSearch
     >>> bing_image = PyBingImageSearch('Your-Api-Key-Here', "x-box console")
     >>> first_fifty_result= bing_image.search(limit=50, format='json') #1-50
-    >>> second_fifty_result= bing_image.search(limit=50, format='json') #50-100
+    >>> second_fifty_result= bing_image.search(limit=50, format='json') #51-100
+    >>> print (second_fifty_result[0].media_url)
+    ...
 
 What you get is a list of ImageResult() instances, each comes with the following values:
 
@@ -70,7 +72,9 @@ meta.type: for the most part ImageResult
     >>> from py_bing_search import PyBingVideoSearch
     >>> bing_video = PyBingVideoSearch('Your-Api-Key-Here', "cats")
     >>> first_fifty_result= bing_video.search(limit=50, format='json') #1-50
-    >>> second_fifty_result= bing_video.search(limit=50, format='json') #50-100
+    >>> second_fifty_result= bing_video.search(limit=50, format='json') #51-100
+    >>> print (second_fifty_result[0].media_url)
+    ...
 
 What you get is a list of VideoResult() instances, each comes with the following values:
 
@@ -92,7 +96,9 @@ meta.type: for the most part VideoResult
     >>> from py_bing_search import PyBingNewsSearch
     >>> bing_news = PyBingNewsbSearch('Your-Api-Key-Here', "US Election")
     >>> first_fifty_result= bing_news.search(limit=50, format='json') #1-50
-    >>> second_fifty_result= bing_news.search(limit=50, format='json') #50-100
+    >>> second_fifty_result= bing_news.search(limit=50, format='json') #51-100
+    >>> print (second_fifty_result[0].url)
+    ...
 
 What you get is a list of NewsResult() instances, each comes with the following values:
 
