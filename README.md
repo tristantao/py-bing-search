@@ -17,20 +17,14 @@ Usage
 
 Remember to set the `API_KEY` as your own.
 
-    >>> from py_bing_search import PyBingSearch
-    >>> bing = PyBingSearch('Your-Api-Key-Here')
-    >>> result_list, next_uri = bing.search("Python Software Foundation", limit=50, format='json')
+####For Web Results:
 
-You can also run *search_all* to keep search going until it fills your required quota
+    >>> from py_bing_search import PyBingWebSearch
+    >>> bing_web = PyBingWebSearch('Your-Api-Key-Here', "Python Software Foundation")
+    >>> first_fifty_result= bing_web.search(limit=50, format='json') #1-50
+    >>> second_fifty_result= bing_web.search(limit=50, format='json') #50-100
 
-    >>> result_list = bing.search_all("Python Software Foundation", limit=130, format='json')
-    >>> len(result_list) == 130
-    True
-    >>>
-
-result_list is a list of search results. next_uri is the search link to the next page
-
-    >>> result_list[0].description
+    >>> print (result_list[0].description)
     u'Python Software Foundation Home Page. The mission of the Python Software Foundation is to promote, protect, and advance the Python programming language, and to ...'
     
     >>> for result in result_list:
@@ -51,4 +45,39 @@ self.id:            bing id for the page
 self.meta.uri:      the search uri for bing
 self.meta.type:     for the most part WebResult
 ```
+
+####For Image Results:
+
+    >>> from py_bing_search import PyBingImageSearch
+    >>> bing_image = PyBingImageSearch('Your-Api-Key-Here', "x-box console")
+    >>> first_fifty_result= bing_image.search(limit=50, format='json') #1-50
+    >>> second_fifty_result= bing_image.search(limit=50, format='json') #50-100
+
+####For Video Results:
+
+    >>> from py_bing_search import PyBingVideoSearch
+    >>> bing_video = PyBingVideoSearch('Your-Api-Key-Here', "cats")
+    >>> first_fifty_result= bing_video.search(limit=50, format='json') #1-50
+    >>> second_fifty_result= bing_video.search(limit=50, format='json') #50-100
+
+####For News Results:
+
+    >>> from py_bing_search import PyBingNewsSearch
+    >>> bing_news = PyBingNewsbSearch('Your-Api-Key-Here', "US Election")
+    >>> first_fifty_result= bing_news.search(limit=50, format='json') #1-50
+    >>> second_fifty_result= bing_news.search(limit=50, format='json') #50-100
+
+
+
+## Searching for a specific number of results.
+
+You can also run *search_all* to keep search going until it fills your required quota
     
+    >>> from py_bing_search import PyBingWebSearch
+    >>> bing_web = PyBingNewsbSearch('Your-Api-Key-Here', "Python Software Foundation")
+    >>> result_list = bing_web.search_all(limit=130, format='json') #will return result 1 to 130
+    >>> len(result_list) == 130
+    True
+    >>> result_list = bing_web.search_all(limit=130, format='json') #will return result 131 to 260
+
+
