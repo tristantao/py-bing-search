@@ -1,6 +1,4 @@
-import urllib2
-import requests
-import pdb
+import requests, requests.utils
 import time
 
 class PyBingException(Exception):
@@ -56,7 +54,7 @@ class PyBingWebSearch(PyBingSearch):
         '''
         Returns a list of result objects, with the url for the next page bing search url.
         '''
-        url = self.QUERY_URL.format(urllib2.quote("'{}'".format(self.query)), min(50, limit), self.current_offset, format)
+        url = self.QUERY_URL.format(requests.utils.quote("'{}'".format(self.query)), min(50, limit), self.current_offset, format)
         r = requests.get(url, auth=("", self.api_key))
         try:
             json_results = r.json()
@@ -123,7 +121,7 @@ class PyBingImageSearch(PyBingSearch):
         '''
         Returns a list of result objects, with the url for the next page bing search url.
         '''
-        url = self.QUERY_URL.format(urllib2.quote("'{}'".format(self.query)), min(50, limit), self.current_offset, format)
+        url = self.QUERY_URL.format(requests.utils.quote("'{}'".format(self.query)), min(50, limit), self.current_offset, format)
         r = requests.get(url, auth=("", self.api_key))
         try:
             json_results = r.json()
@@ -200,7 +198,7 @@ class PyBingVideoSearch(PyBingSearch):
         '''
         Returns a list of result objects, with the url for the next page bing search url.
         '''
-        url = self.QUERY_URL.format(urllib2.quote("'{}'".format(self.query)), min(50, limit), self.current_offset, format)
+        url = self.QUERY_URL.format(requests.utils.quote("'{}'".format(self.query)), min(50, limit), self.current_offset, format)
         r = requests.get(url, auth=("", self.api_key))
         try:
             json_results = r.json()
@@ -270,7 +268,7 @@ class PyBingNewsSearch(PyBingSearch):
         '''
         Returns a list of result objects, with the url for the next page bing search url.
         '''
-        url = self.QUERY_URL.format(urllib2.quote("'{}'".format(self.query)), min(50, limit), self.current_offset, format)
+        url = self.QUERY_URL.format(requests.utils.quote("'{}'".format(self.query)), min(50, limit), self.current_offset, format)
         r = requests.get(url, auth=("", self.api_key))
         try:
             json_results = r.json()
