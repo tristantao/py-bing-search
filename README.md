@@ -10,8 +10,13 @@ The modules uses OAuth, so you'll need to get your key here (free for up to 5K/M
 
 Installation
 =====
+#####for python 2.7.* 
 
 ```pip install py-bing-search```
+
+#####for python 3.*
+
+```pip3 install py-bing-search```
 
 *Requires the requests library.
 
