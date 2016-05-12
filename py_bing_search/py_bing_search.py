@@ -64,7 +64,7 @@ class PyBingWebSearch(PyBingSearch):
             if not self.safe:
                 raise PyBingWebException("Request returned with code %s, error msg: %s" % (r.status_code, r.text))
             else:
-                print "[ERROR] Request returned with code %s, error msg: %s. \nContinuing in 5 seconds." % (r.status_code, r.text)
+                print ("[ERROR] Request returned with code %s, error msg: %s. \nContinuing in 5 seconds." % (r.status_code, r.text))
                 time.sleep(5)
         packaged_results = [WebResult(single_result_json) for single_result_json in json_results['d']['results']]
         self.current_offset += min(50, limit, len(packaged_results))
@@ -131,7 +131,7 @@ class PyBingImageSearch(PyBingSearch):
             if not self.safe:
                 raise PyBingImageException("Request returned with code %s, error msg: %s" % (r.status_code, r.text))
             else:
-                print "[ERROR] Request returned with code %s, error msg: %s. \nContinuing in 5 seconds." % (r.status_code, r.text)
+                print ("[ERROR] Request returned with code %s, error msg: %s. \nContinuing in 5 seconds." % (r.status_code, r.text))
                 time.sleep(5)
         packaged_results = [ImageResult(single_result_json) for single_result_json in json_results['d']['results']]
         self.current_offset += min(50, limit, len(packaged_results))
@@ -208,7 +208,7 @@ class PyBingVideoSearch(PyBingSearch):
             if not self.safe:
                 raise PyBingVideoException("Request returned with code %s, error msg: %s" % (r.status_code, r.text))
             else:
-                print "[ERROR] Request returned with code %s, error msg: %s. \nContinuing in 5 seconds." % (r.status_code, r.text)
+                print ("[ERROR] Request returned with code %s, error msg: %s. \nContinuing in 5 seconds." % (r.status_code, r.text))
                 time.sleep(5)
         packaged_results = [VideoResult(single_result_json) for single_result_json in json_results['d']['results']]
         self.current_offset += min(50, limit, len(packaged_results))
@@ -278,7 +278,7 @@ class PyBingNewsSearch(PyBingSearch):
             if not self.safe:
                 raise PyBingNewsException("Request returned with code %s, error msg: %s" % (r.status_code, r.text))
             else:
-                print "[ERROR] Request returned with code %s, error msg: %s. \nContinuing in 5 seconds." % (r.status_code, r.text)
+                print ("[ERROR] Request returned with code %s, error msg: %s. \nContinuing in 5 seconds." % (r.status_code, r.text))
                 time.sleep(5)
         packaged_results = [NewsResult(single_result_json) for single_result_json in json_results['d']['results']]
         self.current_offset += min(50, limit, len(packaged_results))
