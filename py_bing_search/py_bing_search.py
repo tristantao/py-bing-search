@@ -50,9 +50,9 @@ class PyBingWebSearch(PyBingSearch):
 
     def __init__(self, api_key, query, web_only=False, safe=False):
         if web_only:
-            query_base = WEB_ONLY_BASE + QUERYSTRING_TEMPLATE
+            query_base = self.WEB_ONLY_BASE + self.QUERYSTRING_TEMPLATE
         else:
-            query_base = SEARCH_WEB_BASE + QUERYSTRING_TEMPLATE
+            query_base = self.SEARCH_WEB_BASE + self.QUERYSTRING_TEMPLATE
         PyBingSearch.__init__(self, api_key, query, query_base, safe=safe)
 
     def _search(self, limit, format):
