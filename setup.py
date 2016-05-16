@@ -3,7 +3,7 @@ import os
 import platform
 
 DESCRIPTION = "A simple lightweight python wrapper for the Azure Bing Search API."
-VERSION = '0.2.4'
+VERSION = '0.2.5'
 LONG_DESCRIPTION = None
 try:
     LONG_DESCRIPTION = open('README.md').read()
