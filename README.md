@@ -29,7 +29,7 @@ Remember to set the `API_KEY` as your own.
 
     >>> from py_bing_search import PyBingWebSearch
     >>> search_term = "Python Software Foundation"
-    >>> bing_web = PyBingWebSearch('Your-Api-Key-Here', search_term)
+    >>> bing_web = PyBingWebSearch('Your-Api-Key-Here', search_term, web_only=False) # web_only is optional, but should be true to use your web only quota instead of your all purpose quota
     >>> first_fifty_result= bing_web.search(limit=50, format='json') #1-50
     >>> second_fifty_result= bing_web.search(limit=50, format='json') #51-100
 
