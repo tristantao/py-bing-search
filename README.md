@@ -59,7 +59,7 @@ self.meta.type:     for the most part WebResult
 
 ```py
 >>> from py_bing_search import PyBingImageSearch
->>> bing_image = PyBingImageSearch('Your-Api-Key-Here', "x-box console")
+>>> bing_image = PyBingImageSearch('Your-Api-Key-Here', "x-box console", image_filters='Size:medium+Color:Monochrome') #image_filters is optional
 >>> first_fifty_result= bing_image.search(limit=50, format='json') #1-50
 >>> second_fifty_result= bing_image.search(limit=50, format='json') #51-100
 >>> print (second_fifty_result[0].media_url)

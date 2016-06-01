@@ -117,16 +117,30 @@ class PyBingImageException(Exception):
 class PyBingImageSearch(PyBingSearch):
 
     IMAGE_QUERY_BASE = 'https://api.datamarket.azure.com/Bing/Search/Image' \
-                 + '?Query={}&$top={}&$skip={}&$format={}'
+                 + '?Query={}&$top={}&$skip={}&$format={}&ImageFilters={}'
 
-    def __init__(self, api_key, query, safe=False):
+    def __init__(self, api_key, query, image_filters='', safe=False):
+        """
+        :param image_filters: Array of strings that filter the response the API sends based on size, aspect,
+        color, style, face or any combination thereof.
+
+        Valid values are:
+         - Size:Small, Size:Medium, Size:Large, Size:Width:[Width], Size:Height:[Height]
+         - Aspect:Square, Aspect:Wide, Aspect:Tall
+         - Color:Color, Color:Monochrome
+         - Style:Photo, Style:Graphics, Face:Face, Face:Portrait, Face:Other
+
+        Value like: Size:Small+Aspect:Square
+        """
         PyBingSearch.__init__(self, api_key, query, self.IMAGE_QUERY_BASE, safe=safe)
+        self.image_filters = image_filters
 
     def _search(self, limit, format):
         '''
         Returns a list of result objects, with the url for the next page bing search url.
         '''
-        url = self.QUERY_URL.format(requests.utils.quote("'{}'".format(self.query)), min(50, limit), self.current_offset, format)
+        filters = requests.utils.quote("'{}'".format(self.image_filters))
+        url = self.QUERY_URL.format(requests.utils.quote("'{}'".format(self.query)), min(50, limit), self.current_offset, format, filters)
         r = requests.get(url, auth=("", self.api_key))
         try:
             json_results = r.json()
