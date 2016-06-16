@@ -5,6 +5,7 @@
 *.egg
 *.egg-info
 dist
+temp_dist
 build
 eggs
 parts
