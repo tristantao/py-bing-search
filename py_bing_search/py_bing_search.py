@@ -60,7 +60,6 @@ class PyBingWebSearch(PyBingSearch):
         Returns a list of result objects, with the url for the next page bing search url.
         '''
         url = self.QUERY_URL.format(requests.utils.quote("'{}'".format(self.query)), min(50, limit), self.current_offset, format)
-        print("url iz:" + url)
         r = requests.get(url, auth=("", self.api_key))
         try:
             json_results = r.json()
