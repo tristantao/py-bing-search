@@ -48,11 +48,11 @@ class PyBingWebSearch(PyBingSearch):
     WEB_ONLY_BASE = 'https://api.datamarket.azure.com/Bing/SearchWeb/v1/Web'
     QUERYSTRING_TEMPLATE = '?Query={}&$top={}&$skip={}&$format={}'
 
-    def __init__(self, api_key, query, web_only=False, safe=False):
+    def __init__(self, api_key, query, web_only=False, safe=False, custom_params=''):
         if web_only:
-            query_base = self.WEB_ONLY_BASE + self.QUERYSTRING_TEMPLATE
+            query_base = self.WEB_ONLY_BASE + self.QUERYSTRING_TEMPLATE + custom_params
         else:
-            query_base = self.SEARCH_WEB_BASE + self.QUERYSTRING_TEMPLATE
+            query_base = self.SEARCH_WEB_BASE + self.QUERYSTRING_TEMPLATE + custom_params
         PyBingSearch.__init__(self, api_key, query, query_base, safe=safe)
 
     def _search(self, limit, format):
@@ -60,6 +60,7 @@ class PyBingWebSearch(PyBingSearch):
         Returns a list of result objects, with the url for the next page bing search url.
         '''
         url = self.QUERY_URL.format(requests.utils.quote("'{}'".format(self.query)), min(50, limit), self.current_offset, format)
+        print("url iz:" + url)
         r = requests.get(url, auth=("", self.api_key))
         try:
             json_results = r.json()
@@ -119,7 +120,7 @@ class PyBingImageSearch(PyBingSearch):
     IMAGE_QUERY_BASE = 'https://api.datamarket.azure.com/Bing/Search/Image' \
                  + '?Query={}&$top={}&$skip={}&$format={}&ImageFilters={}'
 
-    def __init__(self, api_key, query, image_filters='', safe=False):
+    def __init__(self, api_key, query, image_filters='', safe=False, custom_params=''):
         """
         :param image_filters: Array of strings that filter the response the API sends based on size, aspect,
         color, style, face or any combination thereof.
@@ -132,7 +133,7 @@ class PyBingImageSearch(PyBingSearch):
 
         Value like: Size:Small+Aspect:Square
         """
-        PyBingSearch.__init__(self, api_key, query, self.IMAGE_QUERY_BASE, safe=safe)
+        PyBingSearch.__init__(self, api_key, query, self.IMAGE_QUERY_BASE + custom_params, safe=safe)
         self.image_filters = image_filters
 
     def _search(self, limit, format):
@@ -210,8 +211,8 @@ class PyBingVideoSearch(PyBingSearch):
     VIDEO_QUERY_BASE = 'https://api.datamarket.azure.com/Bing/Search/Video' \
                  + '?Query={}&$top={}&$skip={}&$format={}'
 
-    def __init__(self, api_key, query, safe=False):
-        PyBingSearch.__init__(self, api_key, query, self.VIDEO_QUERY_BASE, safe=safe)
+    def __init__(self, api_key, query, safe=False, custom_params=''):
+        PyBingSearch.__init__(self, api_key, query, self.VIDEO_QUERY_BASE + custom_params, safe=safe)
 
     def _search(self, limit, format):
         '''
@@ -280,8 +281,8 @@ class PyBingNewsSearch(PyBingSearch):
     NEWS_QUERY_BASE = 'https://api.datamarket.azure.com/Bing/Search/News' \
                  + '?Query={}&$top={}&$skip={}&$format={}'
 
-    def __init__(self, api_key, query, safe=False):
-        PyBingSearch.__init__(self, api_key, query, self.NEWS_QUERY_BASE, safe=safe)
+    def __init__(self, api_key, query, safe=False, custom_params=''):
+        PyBingSearch.__init__(self, api_key, query, self.NEWS_QUERY_BASE + custom_params, safe=safe)
 
     def _search(self, limit, format):
         '''
