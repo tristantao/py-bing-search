@@ -149,5 +149,19 @@ True
 >>> result_list = bing_web.search_all(limit=130, format='json') #will return result 131 to 260
 ```
 
-__*search_all*__ is available in all PyBing*search classes.
+__*search_all()*__ is available in all PyBing*Search classes.
 
+## Custom parameters
+
+If you need more control via *custom parameters* (and you know what you're doing), you can include a __*custom_param*__ parameter as follows:
+
+```py
+>>> from py_bing_search import PyBingWebSearch
+web_bing = PyBingWebSearch('Your-Api-Key-Her', "some bad search", custom_params="&Adult='Strict'")
+result_list = bing_web.search_all(limit=100, format='json') 
+# result_list should now contain 100 results that are filetered by safesearch.
+```
+
+Don't forget to include the __*&__* at the start of your custom_param or the search will return the error msg: "py_bing_search.py_bing_search.PyBingWebException: Request returned with code 400, error msg: The provided format is not supported."
+
+The optional parameter __*custom_param*__ is available in all PyBing*Search constructors.
