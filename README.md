@@ -165,3 +165,20 @@ result_list = bing_web.search_all(limit=100, format='json')
 Don't forget to include the __*&__* at the start of your custom_param or the search will return the error msg: "py_bing_search.py_bing_search.PyBingWebException: Request returned with code 400, error msg: The provided format is not supported."
 
 The optional parameter __*custom_param*__ is available in all PyBing*Search constructors.
+
+## Tests
+
+You can run tests via: 
+
+```sh
+python setup.py test
+```
+
+You'll need to create a config file named __*secrets.cfg*__ in the __*tests/*__ directory that looks like the following:
+
+```rb
+[secret]
+secret: your-secret-key-here
+```
+
+The tests will use your key to run some searches and verify that results are being returned.
