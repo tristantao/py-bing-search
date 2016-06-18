@@ -1,5 +1,6 @@
 from unittest import TestCase
 import time, ConfigParser
+import os
 
 from py_bing_search import PyBingWebSearch
 from py_bing_search import PyBingImageSearch
@@ -8,7 +9,7 @@ from py_bing_search import PyBingNewsSearch
 
 def grab_secret():
     config = ConfigParser.ConfigParser()
-    config.readfp(open('secrets.cfg'))
+    config.readfp(open('tests/secrets.cfg'))
     return config.get('secret', 'secret')
 
 def setUpModule():
