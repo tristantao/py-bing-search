@@ -41,4 +41,6 @@ setup(
     long_description=LONG_DESCRIPTION,
     classifiers=CLASSIFIERS,
     install_requires=INSTALL_REQUIRES,
+    test_suite='nose.collector',
+    tests_require=['nose'],
 )
