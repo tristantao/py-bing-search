@@ -18,3 +18,4 @@ lib64
 
 #sensitive info in this driver
 driver.py
+secrets.cfg
