@@ -13,7 +13,6 @@ def grab_secret():
     return config.get('secret', 'secret')
 
 def setUpModule():
-    'called once, before anything else in this module'
     global SECRET_KEY
     SECRET_KEY = grab_secret()
     print('Setting Up Test')
