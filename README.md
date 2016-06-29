@@ -166,6 +166,17 @@ Don't forget to include the __*&__* at the start of your custom_param or the sea
 
 The optional parameter __*custom_param*__ is available in all PyBing*Search constructors.
 
+## (Unneeded) Custom parameters
+
+Some have asked me about how to restrict the location/language of the search. All of this can be done from the search term rather than at the API level. This means if you want to look up the term *__London__*, but from region of *__Spain__*, and also written in *__Japanese__*, you'd simply search for:
+
+```sh
+London language:ja loc:es
+```
+
+There are many other things you can do, so before you go messing with the API, flex your Bing advanced syntax knowledge. 
+Language reference is [here](https://msdn.microsoft.com/en-us/library/dd250941.aspx).
+
 ## Tests
 
 You can run tests via: 
