@@ -102,6 +102,7 @@ self.id: id of the result
 self.title: title of the resulting Video
 self.media_url: url to the full size Video
 self.display_url: url to display on the search result.
+self.thumbnail: url of the thumbnail image for the video.
 self.run_time: run time of the video
 self.meta: meta info
 
