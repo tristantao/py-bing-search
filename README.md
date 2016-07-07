@@ -115,7 +115,7 @@ meta.type: for the most part VideoResult
 
 ```py
 >>> from py_bing_search import PyBingNewsSearch
->>> bing_news = PyBingNewsbSearch('Your-Api-Key-Here', "US Election")
+>>> bing_news = PyBingNewsSearch('Your-Api-Key-Here', "US Election")
 >>> first_fifty_result= bing_news.search(limit=50, format='json') #1-50
 >>> second_fifty_result= bing_news.search(limit=50, format='json') #51-100
 >>> print (second_fifty_result[0].url)
@@ -143,7 +143,7 @@ You secan also run __*search_all*__ to keep searching until it fills your requir
 
 ```py
 >>> from py_bing_search import PyBingWebSearch
->>> bing_web = PyBingNewsbSearch('Your-Api-Key-Here', "Python Software Foundation")
+>>> bing_web = PyBingNewsSearch('Your-Api-Key-Here', "Python Software Foundation")
 >>> result_list = bing_web.search_all(limit=130, format='json') #will return result 1 to 130
 >>> len(result_list) == 130
 True
