@@ -82,13 +82,13 @@ class TestPyBingNewsSearch(TestCase):
         time.sleep(0.75)
 
     def test_can_search(self):
-        web_bing = PyBingNewsSearch(SECRET_KEY, "Python Software Foundation")
+        web_bing = PyBingNewsSearch(SECRET_KEY, "Python")
         result_one = web_bing.search(limit=50)
         self.assertTrue(len(result_one) > 0)
         self.assertTrue("Python" in result_one[0].title)
 
     def test_search_all(self):
-        web_bing = PyBingNewsSearch(SECRET_KEY, "Python Software Foundation")
+        web_bing = PyBingNewsSearch(SECRET_KEY, "Python")
         result_one = web_bing.search_all(limit=60)
         self.assertTrue(len(result_one) == 60)
         self.assertTrue("Python" in result_one[0].title)
