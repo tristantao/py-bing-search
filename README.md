@@ -1,6 +1,8 @@
 Intro
 =====
 
+#####Note: The project continuation / Microsoft Cognititive Services compliant API is here: [py-ms-cognitive](https://github.com/tristantao/py-ms-cognitive)
+
 Extremely thin python wrapper for Microsoft Azure Bing Search API. Please note that this module does not use the Bing Search API 2.0 AppIDs which will be deprecated on August 1, 2012. This module requires that you sign up to the Windows Azure Marketplace and apply for an application key.
 
 The modules uses OAuth, so you'll need to get your key here (free for up to 5K/Mon):
@@ -194,3 +196,5 @@ secret: your-secret-key-here
 ```
 
 The tests will use your key to run some searches and verify that results are being returned.
+
+#####Note: The project continuation / Microsoft Cognititive Services compliant API is here: [py-ms-cognitive](https://github.com/tristantao/py-ms-cognitive)
