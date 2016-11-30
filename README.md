@@ -1,6 +1,8 @@
 Intro
 =====
 
+## Microsoft announced that the API will be deprecated on &#x1F534;<code>Dec 15, 2016</code>. They'll stop accepting new initialization after &#x1F534;<code>Dec 31st, 2016</code>. Existing subscritions will be cancelled &#x1F534;<code>3/31/2017</code>. You must migrate to Microsoft Cognitive Services to continue operation (see below).
+
 #####Note: The project continuation / Microsoft Cognititive Services compliant API is here: [py-ms-cognitive](https://github.com/tristantao/py-ms-cognitive)
 
 Extremely thin python wrapper for Microsoft Azure Bing Search API. Please note that this module does not use the Bing Search API 2.0 AppIDs which will be deprecated on August 1, 2012. This module requires that you sign up to the Windows Azure Marketplace and apply for an application key.
